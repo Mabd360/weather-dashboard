@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyFlow // Next-Gen Weather Dashboard</title>
+    <!-- Google Fonts: Outfit (Header) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-mode theme-default">
+    <!-- Interactive Background Glow Blobs -->
+    <div class="glow-container">
+        <div class="glow-blob blob-primary"></div>
+        <div class="glow-blob blob-secondary"></div>
+        <div class="glow-blob blob-tertiary"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="brand-logo">
+                <i class="fa-solid fa-cloud-bolt-rain"></i>
+            </div>
+            <div class="brand-text">
+                <span class="logo-title">SKYFLOW</span>
+                <span class="logo-tag">METEOROLOGICAL PLATFORM</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button id="theme-toggle" class="btn-icon" title="Toggle Light/Dark Theme">
+                <i class="fa-solid fa-sun" id="theme-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- Input & Dynamic Weather Status -->
+        <section class="control-panel">
+            <!-- Glassmorphism Search Card -->
+            <div class="glass-card neon-border search-card">
+                <div class="card-glow-layer"></div>
+                <h2>Explore Atmosphere</h2>
+                <form id="search-form" class="search-form">
+                    <div class="input-glow-group">
+                        <i class="fa-solid fa-magnifying-glass input-icon"></i>
+                        <input type="text" id="city-input" placeholder="Type city name..." required autocomplete="off">
+                    </div>
+                    <button type="button" id="btn-geolocation" class="btn-geo-text" title="Detect Current Location">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                        <span>Use Current Location</span>
+                    </button>
+                    <button type="submit" class="btn-neon" id="search-btn">
+                        <span>Retrieve Weather</span>
+                        <i class="fa-solid fa-wind"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Dynamic Weather Report Card (Vercel Style) -->
+            <div class="glass-card weather-result-card hidden" id="weather-card">
+                <div class="card-glow-layer"></div>
+                
+                <div class="weather-header">
+                    <div class="weather-title">
+                        <h2 id="w-city">Paris</h2>
+                        <div class="badge-status">
+                            <span class="pulse-dot"></span>
+                            <span id="w-date">Live Conditions</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-icon-frame">
+                        <img id="w-icon" src="" alt="Weather State">
+                    </div>
+                </div>
+
+                <div class="weather-hero">
+                    <div class="temp-wrapper">
+                        <span id="w-temp">19</span>
+                        <span class="unit">°C</span>
+                    </div>
+                    <div class="condition-label">
+                        <span id="w-desc">Overcast Clouds</span>
+                    </div>
+                </div>
+
+                <div class="stats-cards-grid">
+                    <div class="mini-card">
+                        <div class="mini-card-icon humidity-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <div class="mini-card-info">
+                            <span class="label">Humidity</span>
+                            <span class="val" id="w-humidity">78%</span>
+                        </div>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="mini-card-icon wind-icon">
+                            <i class="fa-solid fa-gauge-simple-high"></i>
+                        </div>
+                        <div class="mini-card-info">
+                            <span class="label">Wind Speed</span>
+                            <span class="val" id="w-wind">5.2 m/s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sleek 24h Temperature Trend Line Chart -->
+            <div class="glass-card chart-card hidden" id="chart-card">
+                <div class="card-glow-layer"></div>
+                <h2>24-Hour Satellite Temperature Trend</h2>
+                <div class="chart-wrapper">
+                    <canvas id="temp-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- 5-Day Satellite Forecast Panel -->
+            <div class="glass-card forecast-card hidden" id="forecast-card">
+                <div class="card-glow-layer"></div>
+                <h2>5-Day Satellite Forecast</h2>
+                <div class="forecast-grid" id="forecast-grid">
+                    <!-- Cards loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Loading Interface -->
+            <div class="loading-panel hidden" id="loading-spinner">
+                <div class="spinner-ring">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+                <p>Establishing connection to global satellites...</p>
+            </div>
+
+            <!-- Modern Styled Error Box -->
+            <div class="glass-card error-card hidden" id="error-card">
+                <i class="fa-solid fa-circle-radiation error-glow-icon"></i>
+                <div class="error-content">
+                    <h3>Lookup Failed</h3>
+                    <p id="error-message">Unable to identify station. Please verify city name spelling.</p>
+                </div>
+            </div>
+
+            <!-- Interactive Welcome Banner -->
+            <div class="glass-card welcome-card" id="welcome-card">
+                <div class="card-glow-layer"></div>
+                <div class="welcome-orb">
+                    <i class="fa-solid fa-circle-nodes"></i>
+                </div>
+                <h3>Atmospheric Hub</h3>
+                <p>Input a city globally to fetch high-fidelity meteorological indexes and store search logs.</p>
+            </div>
+        </section>
+
+        <!-- Search History Database Section -->
+        <section class="history-panel">
+            <div class="glass-card history-card">
+                <div class="card-glow-layer"></div>
+                <div class="history-header">
+                    <div class="header-left">
+                        <h2>Search Index History</h2>
+                        <span class="db-badge"><i class="fa-solid fa-database"></i> PostgreSQL Connected</span>
+                    </div>
+                    <button id="clear-history-btn" class="btn-danger-neon hidden">Clear Index</button>
+                </div>
+
+                <!-- Analytics Summary Panel -->
+                <div class="analytics-bar hidden" id="analytics-bar">
+                    <div class="analytics-stat">
+                        <span class="stat-num" id="stat-hot-today">--</span>
+                        <span class="stat-desc">Hottest Today</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span class="stat-num" id="stat-cold-today">--</span>
+                        <span class="stat-desc">Coldest Today</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <span class="stat-num" id="stat-most-city">--</span>
+                        <span class="stat-desc">Most Searched</span>
+                    </div>
+                </div>
+
+                <!-- World Climate Extremes Today -->
+                <div class="analytics-bar" id="world-extremes-bar">
+                    <div class="analytics-stat" id="world-hot-stat">
+                        <span class="stat-num" id="stat-world-hot">Loading...</span>
+                        <span class="stat-desc"><i class="fa-solid fa-earth-americas" style="color: var(--neon-amber);"></i> World Hottest Today</span>
+                    </div>
+                    <div class="analytics-stat" id="world-cold-stat">
+                        <span class="stat-num" id="stat-world-cold">Loading...</span>
+                        <span class="stat-desc"><i class="fa-solid fa-earth-americas" style="color: var(--neon-cyan);"></i> World Coldest Today</span>
+                    </div>
+                </div>
+
+                <!-- History Filtering -->
+                <div class="history-filter-wrapper hidden" id="history-filter-wrapper">
+                    <div class="filter-input-group">
+                        <i class="fa-solid fa-filter filter-icon"></i>
+                        <input type="text" id="history-search" placeholder="Filter database history logs...">
+                    </div>
+                </div>
+
+                <!-- Last 5 quick-search pills -->
+                <div class="pills-scroll hidden" id="recent-pills"></div>
+
+                <!-- Table Container -->
+                <div class="data-table-wrapper">
+                    <table class="premium-table" id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Target Location</th>
+                                <th>Index Temp</th>
+                                <th>Condition</th>
+                                <th>Humidity</th>
+                                <th>Wind Speed</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-list">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+
+                    <!-- Empty state -->
+                    <div class="empty-state" id="empty-history">
+                        <i class="fa-solid fa-ban"></i>
+                        <p>No logged weather search records found in PostgreSQL.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>SKYFLOW // DESIGNED AS A PREMIUM METEOROLOGICAL SERVICE. DATA FROM OPENWEATHERMAP. POSTGRESQL PERSISTED.</p>
+    </footer>
+
+    <!-- App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
