@@ -49,7 +49,7 @@ const themeIcon = document.getElementById('theme-icon');
 // API Path Config
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:5000/api'
-    : 'https://weather-dashboard-api-j57n.onrender.com/api'; // Render URL
+    : 'https://weather-dashboardapi-67uwix4t.b4a.run/api'; // Back4app URL
 
 // State Variables
 let searchHistory = [];

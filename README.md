@@ -4,7 +4,7 @@ A modern, full-stack Weather Dashboard application featuring real-time meteorolo
 
 ## 🚀 Live Demo
 *   **Live Frontend**: *(Vercel deployment link will go here)*
-*   **Live API**: `https://weather-dashboard-api-j57n.onrender.com/api`
+*   **Live API**: `https://weather-dashboardapi-67uwix4t.b4a.run/api`
 
 ---
 
@@ -12,7 +12,7 @@ A modern, full-stack Weather Dashboard application featuring real-time meteorolo
 *   **Frontend**: Vanilla HTML5, CSS3 (with custom dynamic HSL coloring based on local weather conditions), JavaScript (ES6+, client-side routing & dynamic DOM rendering), Chart.js (24-hour temperature forecast visualization).
 *   **Backend**: Node.js & Express.js (REST API, structured controllers & routing, CORS policy config).
 *   **Database**: PostgreSQL hosted on Neon.tech (search log history, structured analytics aggregates).
-*   **Hosting**: Vercel (Frontend CDN), Render (Backend API Web Service).
+*   **Hosting**: Vercel (Frontend CDN), Back4app Containers (Backend API Container).
 
 ---
 
