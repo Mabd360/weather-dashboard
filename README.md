@@ -3,8 +3,8 @@
 A modern, full-stack Weather Dashboard application featuring real-time meteorological tracking, historical search analytics, responsive design (dark/light themes), and coordinate-based geolocation queries.
 
 ## 🚀 Live Demo
-*   **Live Frontend**: *(Vercel deployment link will go here)*
-*   **Live API**: `https://weather-dashboardapi-67uwix4t.b4a.run/api`
+*   **Live Demo**: [weather-dashboard-rosy-three.vercel.app](https://weather-dashboard-rosy-three.vercel.app/)
+*   **API Endpoint**: `https://weather-dashboard-rosy-three.vercel.app/api`
 
 ---
 
