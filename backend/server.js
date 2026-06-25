@@ -43,18 +43,22 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong on the server.' });
 });
 
-// Start the server
-app.listen(PORT, async () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Open http://localhost:${PORT} in your browser to view the application.`);
-  
-  // Verify database connection at startup
-  try {
-    await db.query('SELECT NOW()');
-    console.log('Database connection verification: SUCCESS');
-  } catch (err) {
-    console.error('Database connection verification: FAILED');
-    console.error('Please make sure PostgreSQL is running and DATABASE_URL in backend/.env is correct.');
-    console.error(err.message);
-  }
-});
+// Start the server (only if run directly)
+if (require.main === module) {
+  app.listen(PORT, async () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Open http://localhost:${PORT} in your browser to view the application.`);
+    
+    // Verify database connection at startup
+    try {
+      await db.query('SELECT NOW()');
+      console.log('Database connection verification: SUCCESS');
+    } catch (err) {
+      console.error('Database connection verification: FAILED');
+      console.error('Please make sure PostgreSQL is running and DATABASE_URL in backend/.env is correct.');
+      console.error(err.message);
+    }
+  });
+}
+
+module.exports = app;

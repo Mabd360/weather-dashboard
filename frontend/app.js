@@ -47,9 +47,7 @@ const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
 
 // API Path Config
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:5000/api'
-    : 'https://weather-dashboardapi-67uwix4t.b4a.run/api'; // Back4app URL
+const API_BASE = '/api';
 
 // State Variables
 let searchHistory = [];
