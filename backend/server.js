@@ -18,7 +18,12 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+    if (
+      allowedOrigins.indexOf(origin) !== -1 || 
+      allowedOrigins.includes(origin.replace(/\/$/, "")) ||
+      origin.endsWith('.vercel.app') || 
+      origin.includes('vercel.app')
+    ) {
       return callback(null, true);
     }
     return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'));
