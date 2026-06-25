@@ -1,10 +1,10 @@
-# SkyFlow Weather Dashboard
+# EarthGlow Weather Dashboard
 
 A modern, full-stack Weather Dashboard application featuring real-time meteorological tracking, historical search analytics, responsive design (dark/light themes), and coordinate-based geolocation queries.
 
 ## 🚀 Live Demo
-*   **Live Demo**: [weather-dashboard-rosy-three.vercel.app](https://weather-dashboard-rosy-three.vercel.app/)
-*   **API Endpoint**: `https://weather-dashboard-rosy-three.vercel.app/api`
+*   **Live Demo**: [earthglow.vercel.app](https://earthglow.vercel.app/)
+*   **API Endpoint**: `https://earthglow.vercel.app/api`
 
 ---
 
@@ -12,7 +12,7 @@ A modern, full-stack Weather Dashboard application featuring real-time meteorolo
 *   **Frontend**: Vanilla HTML5, CSS3 (with custom dynamic HSL coloring based on local weather conditions), JavaScript (ES6+, client-side routing & dynamic DOM rendering), Chart.js (24-hour temperature forecast visualization).
 *   **Backend**: Node.js & Express.js (REST API, structured controllers & routing, CORS policy config).
 *   **Database**: PostgreSQL hosted on Neon.tech (search log history, structured analytics aggregates).
-*   **Hosting**: Vercel (Frontend CDN), Back4app Containers (Backend API Container).
+*   **Hosting**: Vercel (Frontend & Serverless Backend API).
 
 ---
 

@@ -1,4 +1,4 @@
-// Next-Gen SkyFlow Weather Dashboard UI Logic
+// Next-Gen EarthGlow Weather Dashboard UI Logic
 
 // DOM Elements
 const searchForm = document.getElementById('search-form');
