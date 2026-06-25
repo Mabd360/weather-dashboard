@@ -419,10 +419,16 @@ body {
 
 /* Stats grids (Larger mini-cards) */
 .stats-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
 }
 
 .mini-card {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
     padding: 22px;
     border-radius: var(--border-radius-lg);
     gap: 20px;
@@ -546,6 +552,18 @@ body {
 }
 
 /* Premium Spacious Table */
+.data-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
 .premium-table th {
     font-size: 0.85rem; /* Larger headers */
     letter-spacing: 1.2px;
